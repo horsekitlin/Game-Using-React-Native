@@ -17,7 +17,25 @@ default_platform(:ios)
 
 platform :ios do
   desc "Description of what the lane does"
-  lane :custom_lane do
+  lane :upload_testflight do
     # add actions here: https://docs.fastlane.tools/actions
+    build_app(
+      scheme: "GameApp",
+      export_options: {
+        method: "app-store",
+        provisioningProfiles: { 
+          "com.tomas.fly" => "match AppStore com.tomas.fly"
+        }
+      }
+    )
+
+    upload_to_testflight(
+      beta_app_feedback_email: "horsekit1982@gmail.com",
+      beta_app_description: "small fly game",
+      demo_account_required: false,
+      notify_external_testers: false,
+      changelog: "this is first game on apple store"
+    )
   end
+
 end
